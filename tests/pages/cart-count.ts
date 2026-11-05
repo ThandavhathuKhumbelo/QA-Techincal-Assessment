@@ -1,5 +1,6 @@
 
 import { expect, Page } from '@playwright/test';
+import { ICartPage } from './types/cart.types';
 
 export class CartPage {
     constructor(private page: Page) {}
@@ -57,6 +58,10 @@ export class CartPage {
     {
     await this.page.locator('#add-to-cart-sauce-labs-backpack').click();
     await this.page.locator('#add-to-cart-sauce-labs-bike-light').click();
-}
+    }
+
+async verifyCartIsEmpty() { await expect(this.cartItems).toHaveCount(0);}
+
+async verifyCartBadgeIsEmpty() {await expect(this.cartBadge).toHaveCount(0); }
 
 }

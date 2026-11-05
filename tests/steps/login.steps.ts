@@ -11,7 +11,7 @@ Given('I am on the login page', async ({ page }) =>
 });
 
 When('I enter valid login credentials', async ({ page }) => 
-    {
+{
     const loginPage = new LoginPage(page);
     await loginPage.login('standard_user', 'secret_sauce');
 });

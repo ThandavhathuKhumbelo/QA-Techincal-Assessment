@@ -3,15 +3,15 @@ import { test } from "../../../tests/fixtures/login.fixture";
 
 test.describe('Checkout information', () => {
 
-  test('User fills checkout information successfully', async ({ Given, When, Then, And, page }) => { 
-    await Given('the cart has products added', null, { page }); 
+  test('User fills checkout information successfully', async ({ Given, When, Then, And, loggedIn, page }) => { 
+    await Given('the cart has products added', null, { loggedIn, page }); 
     await When('I attempt to checkout', null, { page }); 
     await And('I attempt to submit the check out form', null, { page }); 
     await Then('I should get to the finish page', null, { page }); 
   });
 
-  test('Fail to check out without information', async ({ Given, When, Then, page }) => { 
-    await Given('the cart has products added', null, { page }); 
+  test('Fail to check out without information', async ({ Given, When, Then, loggedIn, page }) => { 
+    await Given('the cart has products added', null, { loggedIn, page }); 
     await When('I attempt to checkout without filling the form', null, { page }); 
     await Then('I should see a checkout error message', null, { page }); 
   });
