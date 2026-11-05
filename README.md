@@ -1,1 +1,0 @@
-# QA-Techincal-Assessment
