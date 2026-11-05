@@ -1,11 +1,9 @@
 
 import { createBdd } from 'playwright-bdd';
 import { test } from '../fixtures/login.fixture';
-
 import { CartPage } from '../pages/cart-count';
 import { CheckoutPage } from '../pages/check-out';
 import { NavigationPage } from '../pages/navigation';
-
 import checkoutData from '../data/check-out.data.json';
 
 const { Given, When, Then } = createBdd(test);
