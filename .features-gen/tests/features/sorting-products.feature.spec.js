@@ -1,5 +1,5 @@
 // Generated from: tests\features\sorting-products.feature
-import { test } from "playwright-bdd";
+import { test } from "../../../tests/fixtures/login.fixture";
 
 test.describe('sorting Products', () => {
 
