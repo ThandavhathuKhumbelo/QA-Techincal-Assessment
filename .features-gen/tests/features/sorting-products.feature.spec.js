@@ -5,26 +5,26 @@ test.describe('sorting Products', () => {
 
   test.describe('Sort products using available sorting options', () => {
 
-    test('Example #1', async ({ Given, When, Then, page }) => { 
-      await Given('I am logged in and viewing the products page', null, { page }); 
+    test('Example #1', async ({ Given, When, Then, loggedIn, page }) => { 
+      await Given('I am logged in and viewing the products page', null, { loggedIn }); 
       await When('I sort products by "Name: A to Z"', null, { page }); 
       await Then('all products should be sorted by "Name: A to Z"', null, { page }); 
     });
 
-    test('Example #2', async ({ Given, When, Then, page }) => { 
-      await Given('I am logged in and viewing the products page', null, { page }); 
+    test('Example #2', async ({ Given, When, Then, loggedIn, page }) => { 
+      await Given('I am logged in and viewing the products page', null, { loggedIn }); 
       await When('I sort products by "Name: Z to A"', null, { page }); 
       await Then('all products should be sorted by "Name: Z to A"', null, { page }); 
     });
 
-    test('Example #3', async ({ Given, When, Then, page }) => { 
-      await Given('I am logged in and viewing the products page', null, { page }); 
+    test('Example #3', async ({ Given, When, Then, loggedIn, page }) => { 
+      await Given('I am logged in and viewing the products page', null, { loggedIn }); 
       await When('I sort products by "Price: Low to High"', null, { page }); 
       await Then('all products should be sorted by "Price: Low to High"', null, { page }); 
     });
 
-    test('Example #4', async ({ Given, When, Then, page }) => { 
-      await Given('I am logged in and viewing the products page', null, { page }); 
+    test('Example #4', async ({ Given, When, Then, loggedIn, page }) => { 
+      await Given('I am logged in and viewing the products page', null, { loggedIn }); 
       await When('I sort products by "Price: High to Low"', null, { page }); 
       await Then('all products should be sorted by "Price: High to Low"', null, { page }); 
     });
