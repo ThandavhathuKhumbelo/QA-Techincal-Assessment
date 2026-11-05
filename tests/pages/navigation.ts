@@ -1,6 +1,6 @@
 
 import { expect, Page } from '@playwright/test';
-import { INavigationPage } from './interfaces/INavigationPage';
+import { INavigationPage } from './types/navigation.types';
 
 export class NavigationPage implements INavigationPage {
 
