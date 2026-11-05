@@ -1,4 +1,5 @@
 import { expect, Page } from '@playwright/test';
+import { ICheckoutPage } from './types/check-out.types';
 
 export class CheckoutPage {
     constructor(private page: Page) { }
