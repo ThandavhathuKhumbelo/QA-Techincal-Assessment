@@ -19,6 +19,14 @@ Given('the cart has products added', async ({ page, loggedIn }) =>
     await cartPage.addBackpackAndBikeLight();
 });
 
+When('I attempt to checkout', async ({ page }) => {
+    const cartPage = new CartPage(page);
+    const checkoutPage = new CheckoutPage(page);
+
+    await cartPage.openCart();
+    await checkoutPage.proceedToCheckout();
+});
+
 // When: Submit valid checkout information
 When('I attempt to submit the check out form', async ({ page }) => 
 {

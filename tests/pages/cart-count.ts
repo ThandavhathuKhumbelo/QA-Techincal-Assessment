@@ -59,4 +59,8 @@ export class CartPage {
     await this.page.locator('#add-to-cart-sauce-labs-bike-light').click();
 }
 
+async verifyCartIsEmpty() { await expect(this.cartItems).toHaveCount(0);}
+
+async verifyCartBadgeIsEmpty() {await expect(this.cartBadge).toHaveCount(0); }
+
 }
