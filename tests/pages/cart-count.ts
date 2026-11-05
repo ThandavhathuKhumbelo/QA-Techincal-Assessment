@@ -53,5 +53,10 @@ export class CartPage {
         await expect(this.cartItems).toHaveCount(expectedCount);
     }
 
+    async addBackpackAndBikeLight() 
+    {
+    await this.page.locator('#add-to-cart-sauce-labs-backpack').click();
+    await this.page.locator('#add-to-cart-sauce-labs-bike-light').click();
+}
 
 }
