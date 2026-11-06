@@ -28,6 +28,7 @@ export default defineConfig({
 
     use: {
         trace: 'on-first-retry',
+        testIdAttribute: 'data-test',
     },
 
     projects: [

@@ -16,7 +16,7 @@ export class LoginPage implements ILoginPage
     readonly passwordInput: Locator;
     readonly errorMessage: Locator;
     readonly appLogo: Locator;
-    readonly loginButton: Locator = this.page.getByRole('button', { name: 'Login' });
+    readonly loginButton: Locator
 
     constructor(private page: Page) 
     {
