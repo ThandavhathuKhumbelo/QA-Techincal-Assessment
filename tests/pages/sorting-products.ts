@@ -1,71 +1,66 @@
 
-import { expect, Page } from '@playwright/test';
+import { Page, Locator, expect } from '@playwright/test';
 
-export class ProductsPage {
-  constructor(private page: Page) {}
+export interface IProductsPage 
+{
+    productSortDropdown: Locator;
+    activeFilter: Locator;
+    productNames: Locator;
+    productPrices: Locator;
+}
 
-  private sortDropdown = this.page.locator(
-    '[data-test="product-sort-container"]'
-  );
+export class ProductsPage implements IProductsPage 
+{
+    readonly productSortDropdown: Locator;
+    readonly activeFilter: Locator;
+    readonly productNames: Locator;
+    readonly productPrices: Locator;
 
-  private productNames = this.page.locator('.inventory_item_name');
-
-  private productPrices = this.page.locator('.inventory_item_price');
-
-  async sortProducts(sortingOption: string) {
-    const sortOptions: Record<string, string> = {
-      'Name: A to Z': 'az',
-      'Name: Z to A': 'za',
-      'Price: Low to High': 'lohi',
-      'Price: High to Low': 'hilo',
-    };
-
-    const optionValue = sortOptions[sortingOption];
-
-    if (!optionValue) {
-      throw new Error(`Invalid sorting option: ${sortingOption}`);
+    constructor(private page: Page) 
+    {
+        this.productSortDropdown = page.getByTestId('product-sort-container');
+        this.activeFilter = page.getByTestId('active-option');
+        this.productNames = page.getByTestId('inventory-item-name');
+        this.productPrices = page.getByTestId('inventory-item-price');
     }
 
-    await this.sortDropdown.selectOption(optionValue);
-  }
+    // Select sorting option
+    async selectSortOption(option: string) {await this.productSortDropdown.selectOption({ label: option }); }
 
-  async verifyProductsSorted(sortingOption: string) {
-    if (sortingOption.startsWith('Name:')) {
-      await this.verifyNamesSorted(sortingOption);
-    } else {
-      await this.verifyPricesSorted(sortingOption);
+    // Verify selected filter and actual product order
+    async verifyProductsSorted() 
+    {
+        const selectedFilter = await this.activeFilter.textContent();
+        await expect(this.activeFilter).toHaveText(selectedFilter!.trim());
+        if (selectedFilter?.includes('Name (A to Z)'))
+        {
+            const names = await this.productNames.allTextContents();
+            expect(names).toEqual([...names].sort((a, b) => a.localeCompare(b)));
+        }
+         else 
+          if(selectedFilter?.includes('Name (Z to A)')) 
+        {
+            const names = await this.productNames.allTextContents();
+            expect(names).toEqual([...names].sort((a, b) => b.localeCompare(a)));
+
+        } else 
+          if (selectedFilter?.includes('Price (low to high)'))
+        {
+            const prices = await this.productPrices.allTextContents();
+            const actualPrices = prices.map(price => Number(price.replace('$', '').trim()) );
+            expect(actualPrices).toEqual([...actualPrices].sort((a, b) => a - b));
+
+        } else
+          if (selectedFilter?.includes('Price (high to low)')) 
+            {
+
+            const prices = await this.productPrices.allTextContents();
+            const actualPrices = prices.map(price =>Number(price.replace('$', '').trim()))
+            expect(actualPrices).toEqual([...actualPrices].sort((a, b) => b - a)
+            );
+        } else
+        {
+          throw new Error(`Unexpected sorting option: ${selectedFilter}`);
+        }
     }
-  }
-
-  private async verifyNamesSorted(sortingOption: string) {
-    const actualNames = await this.productNames.allTextContents();
-
-    const expectedNames = [...actualNames].sort((a, b) =>
-      a.localeCompare(b)
-    );
-
-    if (sortingOption === 'Name: Z to A') {
-      expectedNames.reverse();
-    }
-
-    expect(actualNames).toEqual(expectedNames);
-  }
-
-  private async verifyPricesSorted(sortingOption: string) {
-    const priceTexts = await this.productPrices.allTextContents();
-
-    const actualPrices = priceTexts.map(price =>
-      Number(price.replace('$', '').trim())
-    );
-
-    const expectedPrices = [...actualPrices].sort(
-      (a, b) => a - b
-    );
-
-    if (sortingOption === 'Price: High to Low') {
-      expectedPrices.reverse();
-    }
-
-    expect(actualPrices).toEqual(expectedPrices);
-  }
 }
