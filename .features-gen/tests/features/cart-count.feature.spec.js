@@ -1,5 +1,5 @@
 // Generated from: tests\features\cart-count.feature
-import { test } from "../../../tests/fixtures/login.fixture";
+import { test } from "../../../tests/fixtures/login.fixture.ts";
 
 test.describe('Add to cart and count feature', () => {
 

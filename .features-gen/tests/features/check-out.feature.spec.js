@@ -1,19 +1,18 @@
 // Generated from: tests\features\check-out.feature
-import { test } from "../../../tests/fixtures/login.fixture";
+import { test } from "../../../tests/fixtures/login.fixture.ts";
 
 test.describe('Checkout information', () => {
 
-  test('User fills checkout information successfully', async ({ Given, When, Then, And, loggedIn, page }) => { 
-    await Given('the cart has products added', null, { loggedIn, page }); 
-    await When('I attempt to checkout', null, { page }); 
-    await And('I attempt to submit the check out form', null, { page }); 
-    await Then('I should get to the finish page', null, { page }); 
+  test('User fills checkout information successfully', async ({ Given, When, Then, authenticatedPage }) => { 
+    await Given('the cart has products added', null, { authenticatedPage }); 
+    await When('I attempt to checkout after filling valid check out information', null, { authenticatedPage }); 
+    await Then('I should get to the finish page to see check out overview', null, { authenticatedPage }); 
   });
 
-  test('Fail to check out without information', async ({ Given, When, Then, loggedIn, page }) => { 
-    await Given('the cart has products added', null, { loggedIn, page }); 
-    await When('I attempt to checkout without filling the form', null, { page }); 
-    await Then('I should see a checkout error message', null, { page }); 
+  test('Fail to check out without information', async ({ Given, When, Then, authenticatedPage }) => { 
+    await Given('the cart has products added', null, { authenticatedPage }); 
+    await When('I attempt to checkout without filling the checkout information', null, { authenticatedPage }); 
+    await Then('I should see a checkout error message', null, { authenticatedPage }); 
   });
 
 });
@@ -27,6 +26,6 @@ test.use({
 });
 
 const bddFileData = [ // bdd-data-start
-  {"pwTestLine":6,"pickleLine":3,"tags":[],"steps":[{"pwStepLine":7,"gherkinStepLine":4,"keywordType":"Context","textWithKeyword":"Given the cart has products added","stepMatchArguments":[]},{"pwStepLine":8,"gherkinStepLine":5,"keywordType":"Action","textWithKeyword":"When I attempt to checkout","stepMatchArguments":[]},{"pwStepLine":9,"gherkinStepLine":6,"keywordType":"Action","textWithKeyword":"And I attempt to submit the check out form","stepMatchArguments":[]},{"pwStepLine":10,"gherkinStepLine":7,"keywordType":"Outcome","textWithKeyword":"Then I should get to the finish page","stepMatchArguments":[]}]},
-  {"pwTestLine":13,"pickleLine":9,"tags":[],"steps":[{"pwStepLine":14,"gherkinStepLine":10,"keywordType":"Context","textWithKeyword":"Given the cart has products added","stepMatchArguments":[]},{"pwStepLine":15,"gherkinStepLine":11,"keywordType":"Action","textWithKeyword":"When I attempt to checkout without filling the form","stepMatchArguments":[]},{"pwStepLine":16,"gherkinStepLine":12,"keywordType":"Outcome","textWithKeyword":"Then I should see a checkout error message","stepMatchArguments":[]}]},
+  {"pwTestLine":6,"pickleLine":3,"tags":[],"steps":[{"pwStepLine":7,"gherkinStepLine":4,"keywordType":"Context","textWithKeyword":"Given the cart has products added","stepMatchArguments":[]},{"pwStepLine":8,"gherkinStepLine":5,"keywordType":"Action","textWithKeyword":"When I attempt to checkout after filling valid check out information","stepMatchArguments":[]},{"pwStepLine":9,"gherkinStepLine":6,"keywordType":"Outcome","textWithKeyword":"Then I should get to the finish page to see check out overview","stepMatchArguments":[]}]},
+  {"pwTestLine":12,"pickleLine":8,"tags":[],"steps":[{"pwStepLine":13,"gherkinStepLine":9,"keywordType":"Context","textWithKeyword":"Given the cart has products added","stepMatchArguments":[]},{"pwStepLine":14,"gherkinStepLine":10,"keywordType":"Action","textWithKeyword":"When I attempt to checkout without filling the checkout information","stepMatchArguments":[]},{"pwStepLine":15,"gherkinStepLine":11,"keywordType":"Outcome","textWithKeyword":"Then I should see a checkout error message","stepMatchArguments":[]}]},
 ]; // bdd-data-end

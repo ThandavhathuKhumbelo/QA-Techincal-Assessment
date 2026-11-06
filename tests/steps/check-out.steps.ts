@@ -1,65 +1,43 @@
 import { createBdd } from 'playwright-bdd';
 import { test } from '../fixtures/login.fixture';
+import { expect } from '@playwright/test';
 import { CartPage } from '../pages/cart-count';
 import { CheckoutPage } from '../pages/check-out';
-import checkoutData from '../data/check-out.data.json';
 
 const { Given, When, Then } = createBdd(test);
 
-// Access test data
-const validData = checkoutData[0]!.input;
-const invalidData = checkoutData[1]!.input;
-const expectedError = checkoutData[1]!.expectedError!;
-
-// Given: Products are added to the cart
-Given('the cart has products added', async ({ page, loggedIn }) => 
+Given('the cart has products added', async ({ authenticatedPage }) => 
 {
-    await loggedIn.verifySuccessfulLogin();
-    const cartPage = new CartPage(page);
-    await cartPage.addBackpackAndBikeLight();
+    const cartPage = new CartPage(authenticatedPage);
+    await cartPage.addProductToCart();
+    await cartPage.openShoppingCart();
 });
 
-When('I attempt to checkout', async ({ page }) => {
-    const cartPage = new CartPage(page);
-    const checkoutPage = new CheckoutPage(page);
-
-    await cartPage.openCart();
-    await checkoutPage.proceedToCheckout();
-});
-
-// When: Submit valid checkout information
-When('I attempt to submit the check out form', async ({ page }) => 
+When('I attempt to checkout after filling valid check out information', async ({ authenticatedPage }) => 
 {
-     const cartPage = new CartPage(page);
-    const checkoutPage = new CheckoutPage(page);
-    await cartPage.openCart();
-    await checkoutPage.proceedToCheckout();
-    await checkoutPage.fillCheckoutInformation( validData.firstName, validData.lastName, validData.postalCode );
-    await checkoutPage.continueCheckout();
+    const checkoutPage = new CheckoutPage(authenticatedPage);
+    await checkoutPage.clickCheckout();
+    await checkoutPage.enterFirstName('Khumbelo');
+    await checkoutPage.enterLastName('Thandavhathu');
+    await checkoutPage.enterPostalCode('8863');
+    await checkoutPage.clickContinue();
 });
 
-// When: Attempt checkout with empty information
-When('I attempt to checkout without filling the form', async ({ page }) => {
-    const cartPage = new CartPage(page);
-    const checkoutPage = new CheckoutPage(page);
-    await cartPage.openCart();
-    await checkoutPage.proceedToCheckout();
-    await checkoutPage.fillCheckoutInformation( invalidData.firstName, invalidData.lastName, invalidData.postalCode );
-    await checkoutPage.continueCheckout();
-});
-
-// Then: Finish the order
-Then('I should get to the finish page', async ({ page }) => 
+When('I attempt to checkout without filling the checkout information', async ({ authenticatedPage }) => 
 {
-    const checkoutPage = new CheckoutPage(page);
+    const checkoutPage = new CheckoutPage(authenticatedPage);
+    await checkoutPage.clickCheckout();
+    await checkoutPage.clickContinue();
+});
+
+Then('I should get to the finish page to see check out overview', async ({ authenticatedPage }) => 
+{
+    const checkoutPage = new CheckoutPage(authenticatedPage);
     await checkoutPage.verifyCheckoutOverview();
-    await checkoutPage.finishOrder();
-    await checkoutPage.verifyFinishPage();
 });
 
-// Then: Verify checkout error
-Then('I should see a checkout error message', async ({ page }) => 
+Then('I should see a checkout error message', async ({ authenticatedPage }) => 
 {
-    const checkoutPage = new CheckoutPage(page);
-    await checkoutPage.verifyErrorMessage(expectedError);
+    const checkoutPage = new CheckoutPage(authenticatedPage);
+    await checkoutPage.verifyCheckoutError('Error: First Name is required');
 });

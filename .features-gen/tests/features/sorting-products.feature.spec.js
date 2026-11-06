@@ -1,5 +1,5 @@
 // Generated from: tests\features\sorting-products.feature
-import { test } from "../../../tests/fixtures/login.fixture";
+import { test } from "../../../tests/fixtures/login.fixture.ts";
 
 test.describe('sorting Products with different filters', () => {
 

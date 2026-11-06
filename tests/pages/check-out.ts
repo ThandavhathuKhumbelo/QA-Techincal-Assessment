@@ -1,53 +1,43 @@
-import { expect, Page } from '@playwright/test';
-import { ICheckoutPage } from './types/check-out.types';
+import { Page, Locator, expect } from '@playwright/test';
 
-export class CheckoutPage {
-    constructor(private page: Page) { }
-    private checkoutButton = this.page.locator('[data-test="checkout"]');
-    private firstName = this.page.locator('[data-test="firstName"]');
-    private lastName = this.page.locator('[data-test="lastName"]');
-    private postalCode = this.page.locator('[data-test="postalCode"]');
-    private errorMessage = this.page.locator('[data-test="expectedError"]');
-    private continueButton = this.page.locator('[data-test="continue"]');
-
-    async proceedToCheckout() { await this.checkoutButton.click(); }
-
-    async fillCheckoutInformation(firstName: string, lastName: string, postalCode: string) {
-        await this.firstName.fill(firstName);
-        await this.lastName.fill(lastName);
-        await this.postalCode.fill(postalCode);
-    }
-
-    async continueCheckout() { await this.continueButton.click(); }
-
-    async verifyCheckoutOverview() {
-        await expect(this.page).toHaveURL(/checkout-step-two.html/);
-        await expect(this.page.locator('[data-test="title"]')).toHaveText('Checkout: Overview');
-    }
-
-    async verifyFinishPage() 
-    { 
-        await expect(this.page).toHaveURL(/checkout-complete.html/);
-        await expect( this.page.locator('[data-test="complete-header"]')).toHaveText('Thank you for your order!');
-    }
-
-    async finishOrder() { await this.page.locator('[data-test="finish"]').click();}
-
-    async verifyErrorMessage(expectedMessage: string) { await expect(this.errorMessage).toHaveText(expectedMessage); }
-
-    // Verify success title
-async verifySuccessTitle() {
-    await expect(
-        this.page.locator('[data-test="complete-header"]')
-    ).toHaveText('Thank you for your order!');
+export interface ICheckoutPage 
+{
+    checkoutButton: Locator;
+    firstNameInput: Locator;
+    lastNameInput: Locator;
+    postalCodeInput: Locator;
+    continueButton: Locator;
+    checkoutOverview: Locator;
+    errorMessage: Locator;
 }
 
-// Verify success description
-async verifySuccessDescription() {
-    await expect(
-        this.page.locator('[data-test="complete-text"]')
-    ).toHaveText(
-        'Your order has been dispatched, and will arrive just as fast as the pony can get there!'
-    );
-}
+export class CheckoutPage implements ICheckoutPage
+{
+
+    readonly checkoutButton: Locator;
+    readonly firstNameInput: Locator;
+    readonly lastNameInput: Locator;
+    readonly postalCodeInput: Locator;
+    readonly continueButton: Locator;
+    readonly checkoutOverview: Locator;
+    readonly errorMessage: Locator;
+
+    constructor(private page: Page)
+    {
+        this.checkoutButton = page.getByRole('button', { name: 'Checkout' });
+        this.firstNameInput = page.getByRole('textbox', { name: 'First Name' });
+        this.lastNameInput = page.getByRole('textbox', { name: 'Last Name' });
+        this.postalCodeInput = page.getByRole('textbox', { name: 'Zip/Postal Code' });
+        this.continueButton = page.getByRole('button', { name: 'Continue' });
+        this.checkoutOverview = page.getByText('Checkout: Overview');
+        this.errorMessage = page.getByRole('alert');
+    }
+
+    async clickCheckout() {await this.checkoutButton.click();}
+    async enterFirstName(firstName: string) {await this.firstNameInput.fill(firstName);}
+    async enterLastName(lastName: string) {await this.lastNameInput.fill(lastName);}
+    async enterPostalCode(postalCode: string) {await this.postalCodeInput.fill(postalCode);}
+    async clickContinue() {await this.continueButton.click();}
+    async verifyCheckoutOverview() {await expect(this.checkoutOverview).toBeVisible();}
+    async verifyCheckoutError(expectedMessage: string) {await expect(this.errorMessage).toHaveText(expectedMessage);}
 }

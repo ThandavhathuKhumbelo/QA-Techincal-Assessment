@@ -9,8 +9,6 @@ const testDir = defineBddConfig({
         'tests/steps/**/*.ts',
         'tests/fixtures/login.fixture.ts'
     ],
-
-    importTestFrom: './tests/fixtures/login.fixture',
 });
 
 export default defineConfig({

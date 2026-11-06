@@ -1,5 +1,5 @@
 // Generated from: tests\features\login.feature
-import { test } from "../../../tests/fixtures/login.fixture";
+import { test } from "playwright-bdd";
 
 test.describe('Login', () => {
 
