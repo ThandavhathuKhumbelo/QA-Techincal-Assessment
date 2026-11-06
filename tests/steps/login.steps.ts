@@ -28,7 +28,7 @@ When('I attempt to login into the web with invalid credentials', async () =>
 
 Then('the user should be redirected to the home page', async () => 
 {
-     await expect(loginPage.appLogo).toBeVisible();
+    await expect(loginPage.appLogo).toBeVisible();
     await expect(loginPage.appLogo).toHaveText('Swag Labs');
 });
 
