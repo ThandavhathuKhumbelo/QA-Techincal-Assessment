@@ -11,7 +11,6 @@ export interface ILoginPage
 
 export class LoginPage implements ILoginPage 
 {
-
     readonly usernameInput: Locator;
     readonly passwordInput: Locator;
     readonly errorMessage: Locator;
