@@ -3,16 +3,16 @@ import { test } from "../../../tests/fixtures/login.fixture";
 
 test.describe('Login', () => {
 
-  test('Login with valid credentials', async ({ Given, When, Then, page }) => { 
+  test('Login in the swag lab user successfully with valid credentials', async ({ Given, When, Then, page }) => { 
     await Given('I am on the login page', null, { page }); 
-    await When('I enter valid login credentials', null, { page }); 
-    await Then('I should be logged in successfully', null, { page }); 
+    await When('I attempt to login in to the web with valid credentials'); 
+    await Then('the user should be redirected to the home page'); 
   });
 
-  test('Login with invalid credentials', async ({ Given, When, Then, page }) => { 
+  test('Fail to login into the swag lab with invalid credentials', async ({ Given, When, Then, page }) => { 
     await Given('I am on the login page', null, { page }); 
-    await When('I enter invalid login credentials', null, { page }); 
-    await Then('I should see the login error', null, { page }); 
+    await When('I attempt to login into the web with invalid credentials'); 
+    await Then('The user should receive an error message'); 
   });
 
 });
@@ -26,6 +26,6 @@ test.use({
 });
 
 const bddFileData = [ // bdd-data-start
-  {"pwTestLine":6,"pickleLine":7,"tags":[],"steps":[{"pwStepLine":7,"gherkinStepLine":8,"keywordType":"Context","textWithKeyword":"Given I am on the login page","stepMatchArguments":[]},{"pwStepLine":8,"gherkinStepLine":9,"keywordType":"Action","textWithKeyword":"When I enter valid login credentials","stepMatchArguments":[]},{"pwStepLine":9,"gherkinStepLine":10,"keywordType":"Outcome","textWithKeyword":"Then I should be logged in successfully","stepMatchArguments":[]}]},
-  {"pwTestLine":12,"pickleLine":12,"tags":[],"steps":[{"pwStepLine":13,"gherkinStepLine":13,"keywordType":"Context","textWithKeyword":"Given I am on the login page","stepMatchArguments":[]},{"pwStepLine":14,"gherkinStepLine":14,"keywordType":"Action","textWithKeyword":"When I enter invalid login credentials","stepMatchArguments":[]},{"pwStepLine":15,"gherkinStepLine":15,"keywordType":"Outcome","textWithKeyword":"Then I should see the login error","stepMatchArguments":[]}]},
+  {"pwTestLine":6,"pickleLine":6,"tags":[],"steps":[{"pwStepLine":7,"gherkinStepLine":7,"keywordType":"Context","textWithKeyword":"Given I am on the login page","stepMatchArguments":[]},{"pwStepLine":8,"gherkinStepLine":8,"keywordType":"Action","textWithKeyword":"When I attempt to login in to the web with valid credentials","stepMatchArguments":[]},{"pwStepLine":9,"gherkinStepLine":9,"keywordType":"Outcome","textWithKeyword":"Then the user should be redirected to the home page","stepMatchArguments":[]}]},
+  {"pwTestLine":12,"pickleLine":11,"tags":[],"steps":[{"pwStepLine":13,"gherkinStepLine":12,"keywordType":"Context","textWithKeyword":"Given I am on the login page","stepMatchArguments":[]},{"pwStepLine":14,"gherkinStepLine":13,"keywordType":"Action","textWithKeyword":"When I attempt to login into the web with invalid credentials","stepMatchArguments":[]},{"pwStepLine":15,"gherkinStepLine":14,"keywordType":"Outcome","textWithKeyword":"Then The user should receive an error message","stepMatchArguments":[]}]},
 ]; // bdd-data-end

@@ -1,46 +1,32 @@
+import { Page, Locator } from '@playwright/test';
 
-import { expect, Page, Locator } from '@playwright/test';
+export interface ILoginPage 
+{
+    usernameInput: Locator;
+    passwordInput: Locator;
+    errorMessage: Locator;
+    loginButton: Locator;
+    appLogo: Locator;
+}
 
-export class LoginPage {
-  private readonly usernameTextbox: Locator;
-  private readonly passwordTextbox: Locator;
-  private readonly loginButton: Locator;
-  private readonly errorMessage: Locator;
+export class LoginPage implements ILoginPage 
+{
 
-  constructor(private readonly page: Page) {
-    this.usernameTextbox = page.locator('#user-name');
-    this.passwordTextbox = page.locator('#password');
-    this.loginButton = page.locator('#login-button');
-    this.errorMessage = page.locator('[data-test="error"]');
-  }
+    readonly usernameInput: Locator;
+    readonly passwordInput: Locator;
+    readonly errorMessage: Locator;
+    readonly appLogo: Locator;
+    readonly loginButton: Locator = this.page.getByRole('button', { name: 'Login' });
 
-  async navigate(): Promise<void> {
-    await this.page.goto('https://www.saucedemo.com/');
-  }
+    constructor(private page: Page) 
+    {
+        this.usernameInput = page.getByLabel('Username');
+        this.passwordInput = page.getByLabel('Password');
+        this.errorMessage = page.getByText('Epic sadface: Username and password do not match any user in this service');
+        this.loginButton = page.getByRole('button', { name: 'Login' });
+        this.appLogo = page.locator('.app_logo');
+    }
 
-  async enterUsername(username: string): Promise<void> {
-    await this.usernameTextbox.fill(username);
-  }
-
-  async enterPassword(password: string): Promise<void> {
-    await this.passwordTextbox.fill(password);
-  }
-
-  async clickLogin(): Promise<void> {
-    await this.loginButton.click();
-  }
-
-  async login(username: string, password: string): Promise<void> {
-    await this.enterUsername(username);
-    await this.enterPassword(password);
-    await this.clickLogin();
-  }
-
-  async verifySuccessfulLogin(): Promise<void> {
-    await expect(this.page).toHaveURL(/inventory.html/);
-  }
-
-  async verifyErrorMessage(message: string): Promise<void> {
-    await expect(this.errorMessage).toHaveText(message);
-  }
+    async clickLogin() {await this.loginButton.click();
+}
 }

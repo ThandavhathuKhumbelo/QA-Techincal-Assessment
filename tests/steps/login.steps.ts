@@ -1,35 +1,38 @@
-
 import { createBdd } from 'playwright-bdd';
+import { expect } from '@playwright/test';
 import { LoginPage } from '../pages/login';
 
 const { Given, When, Then } = createBdd();
 
+let loginPage: LoginPage;
+
 Given('I am on the login page', async ({ page }) => 
 {
-    const loginPage = new LoginPage(page);
-    await loginPage.navigate();
+    loginPage = new LoginPage(page);
+    await page.goto('https://www.saucedemo.com/');
 });
 
-When('I enter valid login credentials', async ({ page }) => 
+When('I attempt to login in to the web with valid credentials', async () => 
 {
-    const loginPage = new LoginPage(page);
-    await loginPage.login('standard_user', 'secret_sauce');
+    await loginPage.usernameInput.fill('standard_user');
+    await loginPage.passwordInput.fill('secret_sauce');
+    await loginPage.clickLogin();
 });
 
-When('I enter invalid login credentials', async ({ page }) => 
+When('I attempt to login into the web with invalid credentials', async () => 
 {
-    const loginPage = new LoginPage(page);
-    await loginPage.login('invalid_username', 'invalid_password');
+    await loginPage.usernameInput.fill('invalid_user');
+    await loginPage.passwordInput.fill('invalid_password');
+    await loginPage.clickLogin();
 });
 
-Then('I should be logged in successfully', async ({ page }) => 
+Then('the user should be redirected to the home page', async () => 
 {
-    const loginPage = new LoginPage(page);
-    await loginPage.verifySuccessfulLogin();
+     await expect(loginPage.appLogo).toBeVisible();
+    await expect(loginPage.appLogo).toHaveText('Swag Labs');
 });
 
-Then('I should see the login error', async ({ page }) => 
+Then('The user should receive an error message', async () =>
 {
-    const loginPage = new LoginPage(page);
-    await loginPage.verifyErrorMessage('Epic sadface: Username and password do not match any user in this service');
+    await expect(loginPage.errorMessage).toBeVisible();
 });
