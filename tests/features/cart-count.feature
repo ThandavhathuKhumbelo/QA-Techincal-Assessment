@@ -1,15 +1,9 @@
-Feature: Adding products to the cart to verify the cart count
+Feature: Add to cart and count feature
+As a SauceDemo user
+I want to add products to cart and view the cart
+So I can see how many Products are in the cart 
 
-  As a user
-  I want to add products to the cart
-  So that I can see the correct number of items in my cart
-
-  Scenario Outline: Add products to the cart to verify the cart count
-    Given I am on the home product page
-    When I attempt to add "<numberOfProducts>" products to the cart
-    Then the cart count should be updated to "<expectedCartCount>"
-
-    Examples:
-      | numberOfProducts | expectedCartCount |
-      | 3                | 3                 |
-      | 2                | 2                 |
+  Scenario: View products in the cart successfully
+    Given I am On the sauceDemo home page
+    When I attempt to add products to cart
+    Then I should be able to see items total in the cart

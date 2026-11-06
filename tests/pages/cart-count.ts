@@ -1,67 +1,22 @@
+import { Page, Locator, expect } from '@playwright/test';
 
-import { expect, Page } from '@playwright/test';
-import { ICartPage } from './types/cart.types';
+export interface ICartPage { addToCartButton: Locator; shoppingCartButton: Locator; cartItems: Locator; }
 
-export class CartPage {
-    constructor(private page: Page) {}
+export class CartPage implements ICartPage {
+    readonly addToCartButton: Locator;
+    readonly shoppingCartButton: Locator;
+    readonly cartItems: Locator;
 
-    // Locators
-    private addToCartButtons = this.page.locator(
-        '.inventory_item button'
-    );
-
-    private shoppingCartLink = this.page.locator(
-        '[data-test="shopping-cart-link"]'
-    );
-
-    private cartBadge = this.page.locator(
-        '[data-test="shopping-cart-badge"]'
-    );
-
-    private cartItems = this.page.locator('.cart_item');
-
-    // Add a specific number of products to the cart
-    async addProductsToCart(numberOfProducts: number) 
+    constructor(private page: Page) 
     {
-        const productCount = await this.addToCartButtons.count();
-
-        if (numberOfProducts > productCount) 
-        {
-            throw new Error( `Requested ${numberOfProducts} products, but only ${productCount} are available.`);
-        }
-
-        for (let i = 0; i < numberOfProducts; i++) { await this.addToCartButtons.nth(i).click(); }
+        this.addToCartButton = page.getByTestId( 'add-to-cart-sauce-labs-backpack');
+        this.shoppingCartButton = page.getByRole('button',{ name: /Cart/ });
+        this.cartItems = page.locator('[data-test="inventory-item"]');
     }
 
-    async addAllProductsToCart() 
-    { 
-        const productCount = await this.addToCartButtons.count();
-        await this.addProductsToCart(productCount);
-    }
+    async addProductToCart() {await this.addToCartButton.click();}
 
-    async openCart()
-    {
-        await this.shoppingCartLink.click();
-    }
+    async openShoppingCart() {await this.shoppingCartButton.click(); }
 
-    async verifyCartCount(expectedCount: number) 
-    {
-        await expect(this.cartBadge).toHaveText( String(expectedCount));
-    }
-
-    async verifyCartItems(expectedCount: number) 
-    {
-        await expect(this.cartItems).toHaveCount(expectedCount);
-    }
-
-    async addBackpackAndBikeLight() 
-    {
-    await this.page.locator('#add-to-cart-sauce-labs-backpack').click();
-    await this.page.locator('#add-to-cart-sauce-labs-bike-light').click();
-    }
-
-async verifyCartIsEmpty() { await expect(this.cartItems).toHaveCount(0);}
-
-async verifyCartBadgeIsEmpty() {await expect(this.cartBadge).toHaveCount(0); }
-
+    async verifyCartItems(expectedCount: number) {await expect(this.cartItems).toHaveCount(expectedCount);}
 }

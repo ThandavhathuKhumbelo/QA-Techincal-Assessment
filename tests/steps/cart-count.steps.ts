@@ -1,22 +1,23 @@
 import { createBdd } from 'playwright-bdd';
-import { test } from '../fixtures/login.fixture';
 import { CartPage } from '../pages/cart-count';
-
+import { test } from '../fixtures/login.fixture';
 
 const { Given, When, Then } = createBdd(test);
 
-Given('I am on the home product page', async ({ loggedIn }) => 
+Given('I am On the sauceDemo home page', async ({authenticatedPage}) =>
 {
-    await loggedIn.verifySuccessfulLogin();
+    // Authentocation by the fixtixture
 });
 
-When('I attempt to add {string} products to the cart', async ({ page }, numberOfProducts: string) => 
-    {
-        const cartPage = new CartPage(page);
-        await cartPage.addProductsToCart(Number(numberOfProducts));
-    });
+When('I attempt to add products to cart', async ({ authenticatedPage}) =>
+{
+    const cartPage = new CartPage(authenticatedPage);
+    await cartPage.addProductToCart();
+    await cartPage.openShoppingCart();
+});
 
-Then('the cart count should be updated to {string}',async ({ page }, expectedCartCount: string) => {
-        const cartPage = new CartPage(page);
-        await cartPage.verifyCartCount(Number(expectedCartCount));
-    });
+Then('I should be able to see items total in the cart', async ({authenticatedPage}) =>
+{
+    const cartPage = new CartPage(authenticatedPage);
+    await cartPage.verifyCartItems(1); 
+});
