@@ -1,14 +1,12 @@
+Feature: sorting Products with different filters
+As a sauce Demo web user
+I want to filter products with different filters
+So that I can view products in my preferred filter
 
-Feature: sorting Products
-
-  As a user
-  I want to sort products
-  So that I can view products in my preferred order
-
- Scenario Outline: Sort products using available sorting options
-    Given I am logged in and viewing the products page
-    When I sort products by "<sortingOption>"
-    Then all products should be sorted by "<sortingOption>"
+  Scenario Outline: Sort products with different filters successfully
+    Given I am on the Sauce Demo home page
+    When I attempt to sort products by "<sortingOption>"
+    Then all products should be filtered by selected "<sortingOption>"
 
     Examples:
       | sortingOption      |
