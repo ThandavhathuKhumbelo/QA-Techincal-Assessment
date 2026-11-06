@@ -1,34 +1,30 @@
 // Generated from: tests\features\sorting-products.feature
 import { test } from "../../../tests/fixtures/login.fixture";
 
-test.describe('sorting Products', () => {
+test.describe('sorting Products with different filters', () => {
 
-  test.describe('Sort products using available sorting options', () => {
+  test('Sort products with name a to z successfully', async ({ Given, When, Then, authenticatedPage }) => { 
+    await Given('I am on the Sauce Demo home page', null, { authenticatedPage }); 
+    await When('I attempt to sort products by name a to z', null, { authenticatedPage }); 
+    await Then('all products should be filtered by selected sorting option', null, { authenticatedPage }); 
+  });
 
-    test('Example #1', async ({ Given, When, Then, loggedIn, page }) => { 
-      await Given('I am logged in and viewing the products page', null, { loggedIn }); 
-      await When('I sort products by "Name: A to Z"', null, { page }); 
-      await Then('all products should be sorted by "Name: A to Z"', null, { page }); 
-    });
+  test('Sort products with name z to a successfully', async ({ Given, When, Then, authenticatedPage }) => { 
+    await Given('I am on the Sauce Demo home page', null, { authenticatedPage }); 
+    await When('I attempt to sort products by name z to a', null, { authenticatedPage }); 
+    await Then('all products should be filtered by selected sorting option', null, { authenticatedPage }); 
+  });
 
-    test('Example #2', async ({ Given, When, Then, loggedIn, page }) => { 
-      await Given('I am logged in and viewing the products page', null, { loggedIn }); 
-      await When('I sort products by "Name: Z to A"', null, { page }); 
-      await Then('all products should be sorted by "Name: Z to A"', null, { page }); 
-    });
+  test('Sort products with price high successfully', async ({ Given, When, Then, authenticatedPage }) => { 
+    await Given('I am on the Sauce Demo home page', null, { authenticatedPage }); 
+    await When('I attempt to sort products by price high to low', null, { authenticatedPage }); 
+    await Then('all products should be filtered by selected sorting option', null, { authenticatedPage }); 
+  });
 
-    test('Example #3', async ({ Given, When, Then, loggedIn, page }) => { 
-      await Given('I am logged in and viewing the products page', null, { loggedIn }); 
-      await When('I sort products by "Price: Low to High"', null, { page }); 
-      await Then('all products should be sorted by "Price: Low to High"', null, { page }); 
-    });
-
-    test('Example #4', async ({ Given, When, Then, loggedIn, page }) => { 
-      await Given('I am logged in and viewing the products page', null, { loggedIn }); 
-      await When('I sort products by "Price: High to Low"', null, { page }); 
-      await Then('all products should be sorted by "Price: High to Low"', null, { page }); 
-    });
-
+  test('Sort products with price low to high successfully', async ({ Given, When, Then, authenticatedPage }) => { 
+    await Given('I am on the Sauce Demo home page', null, { authenticatedPage }); 
+    await When('I attempt to sort products by price low to high', null, { authenticatedPage }); 
+    await Then('all products should be filtered by selected sorting option', null, { authenticatedPage }); 
   });
 
 });
@@ -42,8 +38,8 @@ test.use({
 });
 
 const bddFileData = [ // bdd-data-start
-  {"pwTestLine":8,"pickleLine":15,"tags":[],"steps":[{"pwStepLine":9,"gherkinStepLine":9,"keywordType":"Context","textWithKeyword":"Given I am logged in and viewing the products page","stepMatchArguments":[]},{"pwStepLine":10,"gherkinStepLine":10,"keywordType":"Action","textWithKeyword":"When I sort products by \"Name: A to Z\"","stepMatchArguments":[{"group":{"start":19,"value":"\"Name: A to Z\"","children":[{"start":20,"value":"Name: A to Z","children":[{}]},{"children":[{}]}]},"parameterTypeName":"string"}]},{"pwStepLine":11,"gherkinStepLine":11,"keywordType":"Outcome","textWithKeyword":"Then all products should be sorted by \"Name: A to Z\"","stepMatchArguments":[{"group":{"start":33,"value":"\"Name: A to Z\"","children":[{"start":34,"value":"Name: A to Z","children":[{}]},{"children":[{}]}]},"parameterTypeName":"string"}]}]},
-  {"pwTestLine":14,"pickleLine":16,"tags":[],"steps":[{"pwStepLine":15,"gherkinStepLine":9,"keywordType":"Context","textWithKeyword":"Given I am logged in and viewing the products page","stepMatchArguments":[]},{"pwStepLine":16,"gherkinStepLine":10,"keywordType":"Action","textWithKeyword":"When I sort products by \"Name: Z to A\"","stepMatchArguments":[{"group":{"start":19,"value":"\"Name: Z to A\"","children":[{"start":20,"value":"Name: Z to A","children":[{}]},{"children":[{}]}]},"parameterTypeName":"string"}]},{"pwStepLine":17,"gherkinStepLine":11,"keywordType":"Outcome","textWithKeyword":"Then all products should be sorted by \"Name: Z to A\"","stepMatchArguments":[{"group":{"start":33,"value":"\"Name: Z to A\"","children":[{"start":34,"value":"Name: Z to A","children":[{}]},{"children":[{}]}]},"parameterTypeName":"string"}]}]},
-  {"pwTestLine":20,"pickleLine":17,"tags":[],"steps":[{"pwStepLine":21,"gherkinStepLine":9,"keywordType":"Context","textWithKeyword":"Given I am logged in and viewing the products page","stepMatchArguments":[]},{"pwStepLine":22,"gherkinStepLine":10,"keywordType":"Action","textWithKeyword":"When I sort products by \"Price: Low to High\"","stepMatchArguments":[{"group":{"start":19,"value":"\"Price: Low to High\"","children":[{"start":20,"value":"Price: Low to High","children":[{}]},{"children":[{}]}]},"parameterTypeName":"string"}]},{"pwStepLine":23,"gherkinStepLine":11,"keywordType":"Outcome","textWithKeyword":"Then all products should be sorted by \"Price: Low to High\"","stepMatchArguments":[{"group":{"start":33,"value":"\"Price: Low to High\"","children":[{"start":34,"value":"Price: Low to High","children":[{}]},{"children":[{}]}]},"parameterTypeName":"string"}]}]},
-  {"pwTestLine":26,"pickleLine":18,"tags":[],"steps":[{"pwStepLine":27,"gherkinStepLine":9,"keywordType":"Context","textWithKeyword":"Given I am logged in and viewing the products page","stepMatchArguments":[]},{"pwStepLine":28,"gherkinStepLine":10,"keywordType":"Action","textWithKeyword":"When I sort products by \"Price: High to Low\"","stepMatchArguments":[{"group":{"start":19,"value":"\"Price: High to Low\"","children":[{"start":20,"value":"Price: High to Low","children":[{}]},{"children":[{}]}]},"parameterTypeName":"string"}]},{"pwStepLine":29,"gherkinStepLine":11,"keywordType":"Outcome","textWithKeyword":"Then all products should be sorted by \"Price: High to Low\"","stepMatchArguments":[{"group":{"start":33,"value":"\"Price: High to Low\"","children":[{"start":34,"value":"Price: High to Low","children":[{}]},{"children":[{}]}]},"parameterTypeName":"string"}]}]},
+  {"pwTestLine":6,"pickleLine":6,"tags":[],"steps":[{"pwStepLine":7,"gherkinStepLine":7,"keywordType":"Context","textWithKeyword":"Given I am on the Sauce Demo home page","stepMatchArguments":[]},{"pwStepLine":8,"gherkinStepLine":8,"keywordType":"Action","textWithKeyword":"When I attempt to sort products by name a to z","stepMatchArguments":[]},{"pwStepLine":9,"gherkinStepLine":9,"keywordType":"Outcome","textWithKeyword":"Then all products should be filtered by selected sorting option","stepMatchArguments":[]}]},
+  {"pwTestLine":12,"pickleLine":11,"tags":[],"steps":[{"pwStepLine":13,"gherkinStepLine":12,"keywordType":"Context","textWithKeyword":"Given I am on the Sauce Demo home page","stepMatchArguments":[]},{"pwStepLine":14,"gherkinStepLine":13,"keywordType":"Action","textWithKeyword":"When I attempt to sort products by name z to a","stepMatchArguments":[]},{"pwStepLine":15,"gherkinStepLine":14,"keywordType":"Outcome","textWithKeyword":"Then all products should be filtered by selected sorting option","stepMatchArguments":[]}]},
+  {"pwTestLine":18,"pickleLine":16,"tags":[],"steps":[{"pwStepLine":19,"gherkinStepLine":17,"keywordType":"Context","textWithKeyword":"Given I am on the Sauce Demo home page","stepMatchArguments":[]},{"pwStepLine":20,"gherkinStepLine":18,"keywordType":"Action","textWithKeyword":"When I attempt to sort products by price high to low","stepMatchArguments":[]},{"pwStepLine":21,"gherkinStepLine":19,"keywordType":"Outcome","textWithKeyword":"Then all products should be filtered by selected sorting option","stepMatchArguments":[]}]},
+  {"pwTestLine":24,"pickleLine":21,"tags":[],"steps":[{"pwStepLine":25,"gherkinStepLine":22,"keywordType":"Context","textWithKeyword":"Given I am on the Sauce Demo home page","stepMatchArguments":[]},{"pwStepLine":26,"gherkinStepLine":23,"keywordType":"Action","textWithKeyword":"When I attempt to sort products by price low to high","stepMatchArguments":[]},{"pwStepLine":27,"gherkinStepLine":24,"keywordType":"Outcome","textWithKeyword":"Then all products should be filtered by selected sorting option","stepMatchArguments":[]}]},
 ]; // bdd-data-end

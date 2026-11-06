@@ -3,14 +3,22 @@ As a sauce Demo web user
 I want to filter products with different filters
 So that I can view products in my preferred filter
 
-  Scenario Outline: Sort products with different filters successfully
+  Scenario: Sort products with name a to z successfully
     Given I am on the Sauce Demo home page
-    When I attempt to sort products by "<sortingOption>"
-    Then all products should be filtered by selected "<sortingOption>"
+    When I attempt to sort products by name a to z
+    Then all products should be filtered by selected sorting option
 
-    Examples:
-      | sortingOption      |
-      | Name: A to Z       |
-      | Name: Z to A       |
-      | Price: Low to High |
-      | Price: High to Low |
+  Scenario: Sort products with name z to a successfully
+    Given I am on the Sauce Demo home page
+    When I attempt to sort products by name z to a
+    Then all products should be filtered by selected sorting option
+
+  Scenario: Sort products with price high successfully
+    Given I am on the Sauce Demo home page
+    When I attempt to sort products by price high to low
+    Then all products should be filtered by selected sorting option
+
+  Scenario: Sort products with price low to high successfully
+    Given I am on the Sauce Demo home page
+    When I attempt to sort products by price low to high
+    Then all products should be filtered by selected sorting option
